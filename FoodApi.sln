@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodApi.Data", "FoodApi.Data\FoodApi.Data.csproj", "{EC1BD72D-D52E-4F5A-BFAA-1E7F18E86146}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodAppApi", "FoodAppApi\FoodAppApi.csproj", "{6A247886-6F59-42C3-8A1B-50766CE10F5F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC1BD72D-D52E-4F5A-BFAA-1E7F18E86146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC1BD72D-D52E-4F5A-BFAA-1E7F18E86146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC1BD72D-D52E-4F5A-BFAA-1E7F18E86146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC1BD72D-D52E-4F5A-BFAA-1E7F18E86146}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A247886-6F59-42C3-8A1B-50766CE10F5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A247886-6F59-42C3-8A1B-50766CE10F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A247886-6F59-42C3-8A1B-50766CE10F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A247886-6F59-42C3-8A1B-50766CE10F5F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29255A1E-4BB7-4A55-9343-C6D11BB8E035}
+	EndGlobalSection
+EndGlobal
