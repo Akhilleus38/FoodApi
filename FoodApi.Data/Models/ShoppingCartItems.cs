@@ -12,12 +12,8 @@ namespace FoodApi.Data.Models
     public partial class ShoppingCartItems
     {
         [Key]
-        public long Id { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal Price { get; set; }
+        public long Id { get; set; } 
         public long Qty { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal TotalAmount { get; set; }
         public long ProductId { get; set; }
         public long CustomerId { get; set; }
 

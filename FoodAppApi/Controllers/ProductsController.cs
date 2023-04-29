@@ -83,7 +83,7 @@ namespace FoodApi.Controllers
             var stream = new MemoryStream(model.ImageArray);
             var guid = Guid.NewGuid().ToString();
             var file = $"{guid}.jpg";
-            var folder = "uploads";
+            var folder = "wwwroot/uploads";
             var response = FilesHelper.UploadImage(stream, folder, file);
             if (!response)
             {
@@ -120,7 +120,7 @@ namespace FoodApi.Controllers
             var stream = new MemoryStream(product.ImageArray);
             var guid = Guid.NewGuid().ToString();
             var file = $"{guid}.jpg";
-            var folder = "uploads";
+            var folder = "wwwroot/uploads";
             var response = FilesHelper.UploadImage(stream, folder, file);
             if (!response)
             {

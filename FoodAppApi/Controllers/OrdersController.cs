@@ -28,7 +28,15 @@ namespace FoodApi.Controllers
         [HttpGet("[action]")]
         public IActionResult PendingOrders()
         {
-            var orders = _dbContext.Orders.Where(order => order.IsOrderCompleted == false);
+            //var orders = _dbContext.Orders.Where(order => order.IsOrderCompleted == false);
+            //return Ok(orders);
+            var orders = _dbContext.Orders.Where(order => order.IsOrderCompleted == true).Select(a => new OrderListApiModel
+            {
+                Id = a.Id,
+                OrderTotal = a.OrderTotal,
+                OrderPlaced = a.OrderPlaced,
+
+            }).ToList();
             return Ok(orders);
         }
 
@@ -37,18 +45,55 @@ namespace FoodApi.Controllers
         [HttpGet("[action]")]
         public IActionResult CompletedOrders()
         {
-            var orders = _dbContext.Orders.Where(order => order.IsOrderCompleted == true);
+            //var orders = _dbContext.Orders.Where(order => order.IsOrderCompleted == true);
+            //return Ok(orders);
+
+            var orders = _dbContext.Orders.Where(order => order.IsOrderCompleted == true).Select(a => new OrderListApiModel
+            {
+Id = a.Id,
+OrderTotal = a.OrderTotal,
+OrderPlaced = a.OrderPlaced,
+
+            }).ToList();
             return Ok(orders);
         }
-
         // GET: api/Orders/OrderDetails/5
         [HttpGet("[action]/{orderId}")]
         public IActionResult OrderDetails(int orderId)
         {
 
-            var orders = _dbContext.Orders.Where(order => order.Id == orderId)
-                   .Include(order => order.OrderDetails)
-                   .ThenInclude(product => product.Product);
+            var orders = _dbContext.Orders.Where(order => order.Id == orderId).Select(a => new OrderListApiModel
+            {
+                Address = a.Address,
+                FullName = a.FullName,
+                IsOrderCompleted = a.IsOrderCompleted,
+                OrderPlaced = a.OrderPlaced,
+                OrderTotal = a.OrderTotal,
+                Phone = a.Phone,
+                UserId = a.UserId,
+                Id = a.Id,
+                OrderDetails = (from t in a.OrderDetails
+                                select new OrderListDetailModel
+                                {
+                                    Price = t.Price,
+                                    Id = t.Id,
+                                    OrderId = t.OrderId,
+                                    ProductId = t.ProductId,
+                                    Qty = t.Qty,
+                                    TotalAmount = t.TotalAmount,
+
+                                    Product = new OrderListProductModel
+                                    {
+                                        Name = t.Product.Name,
+                                       // CategoryId = t.Product.CategoryId,
+                                       // Detail = t.Product.Detail,
+                                        ImageUrl = t.Product.ImageUrl,
+                                       // IsPopularProduct = t.Product.IsPopularProduct,
+                                        //Price = t.Product.Price
+
+                                    }
+                                }).ToList()
+            });
 
             return Ok(orders);
         }
@@ -79,7 +124,6 @@ namespace FoodApi.Controllers
         public IActionResult Post([FromBody] OrderApiModel model)
         {
 
-
             var shoppingCartItems = _dbContext.ShoppingCartItems.Where(cart => cart.CustomerId == model.UserId);
             if (!shoppingCartItems.Any())
             {
@@ -89,16 +133,21 @@ namespace FoodApi.Controllers
             {
                 OrderPlaced = DateTime.Now,
                 IsOrderCompleted = true,
-                FullName = model.FullName
+                FullName = model.FullName,
+                UserId = model.UserId,
+                Address = model.Address,
+                Phone = model.Phone,
+                OrderTotal = model.OrderTotal,
+
             };
 
             order.OrderDetails = (from od in shoppingCartItems
                                   select new OrderDetails
                                   {
-                                      Price = od.Price,
+                                      Price = od.Product.Price,
                                       ProductId = od.ProductId,
                                       Qty = od.Qty,
-                                      TotalAmount = od.TotalAmount,
+                                      TotalAmount = od.Product.Price * od.Qty,
                                   }).ToList();
 
 

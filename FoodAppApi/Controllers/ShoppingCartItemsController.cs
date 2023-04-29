@@ -36,8 +36,8 @@ namespace FoodApi.Controllers
                                     select new
                                     {
                                         Id = s.Id,
-                                        Price = s.Price,
-                                        TotalAmount = s.TotalAmount,
+                                        Price = s.Product.Price,
+                                        TotalAmount = s.Product.Price*s.Qty,
                                         Qty = s.Qty,
                                         ProductName = p.Name,
 
@@ -53,7 +53,7 @@ namespace FoodApi.Controllers
         {
             var subTotal = (from cart in _dbContext.ShoppingCartItems
                             where cart.CustomerId == userId
-                            select cart.TotalAmount).Sum();
+                            select cart.Product.Price * cart.Qty).Sum();
             return Ok(new { SubTotal = subTotal });
         }
 
@@ -76,17 +76,15 @@ namespace FoodApi.Controllers
             if (shoppingCart != null)
             {
                 shoppingCart.Qty += shoppingCartItem.Qty;
-                shoppingCart.TotalAmount = shoppingCart.Price * shoppingCart.Qty;
+                //shoppingCart.TotalAmount = shoppingCart.Price * shoppingCart.Qty;
             }
             else
             {
                 var sCart = new ShoppingCartItems()
                 {
                     CustomerId = shoppingCartItem.CustomerId,
-                    ProductId = shoppingCartItem.ProductId,
-                    Price = shoppingCartItem.Price,
-                    Qty = shoppingCartItem.Qty,
-                    TotalAmount = shoppingCartItem.TotalAmount
+                    ProductId = shoppingCartItem.ProductId, 
+                    Qty = shoppingCartItem.Qty, 
                 };
                 _dbContext.ShoppingCartItems.Add(sCart);
             }
